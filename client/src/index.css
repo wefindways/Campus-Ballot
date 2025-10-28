@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: "Poppins", sans-serif;
+  }
+}
+
+@layer components {
+  .sidebar-nav {
+    @apply flex cursor-pointer text-left px-4 py-3 rounded-lg hover:bg-blue-50 text-black font-medium transition;
+  }
+}

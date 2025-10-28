@@ -1,0 +1,59 @@
+import { useEffect, useRef } from "react";
+import $ from "jquery";
+import "datatables.net-dt/js/dataTables.dataTables";
+import "datatables.net-dt/css/dataTables.dataTables.css";
+import EditButton from "../../../components/admin/buttons/EditButton";
+
+export default function PositionsTable({ positions, onEdit, onDelete }) {
+  const tableRef = useRef(null);
+  useEffect(() => {
+    const table = $(tableRef.current).DataTable({
+      data: positions,
+      columns: [
+        { data: "description", title: "Description" },
+        { data: "max_vote", title: "Max Vote" },
+        {
+          data: null,
+          title: "Actions",
+          orderable: false,
+          render: function (data, type, row) {
+            return `
+              ${<EditButton className="edit-btn" data-id="${row.id}" />}
+            `;
+          },
+        },
+      ],
+      destroy: true, // destroy previous instance on re-init
+      paging: true,
+      searching: true,
+      ordering: true,
+      info: true,
+    });
+    // Attach event listeners for buttons
+    $(tableRef.current).on("click", ".edit-btn", function () {
+      const id = $(this).data("id");
+      const pos = positions.find((p) => p.id === id);
+      if (pos) onEdit(pos);
+    });
+    $(tableRef.current).on("click", ".delete-btn", function () {
+      const id = $(this).data("id");
+      onDelete(id);
+    });
+    return () => {
+      table.destroy();
+    };
+  }, [positions, onEdit, onDelete]);
+  return (
+    <table
+      ref={tableRef}
+      id="positionsTable"
+      className="min-w-full mt-4 border table-fixed display"
+    />
+  );
+}
+
+       <img
+                  src={`http://localhost/online-voting-system/project/server/uploads/${cand.photo}`}
+                  alt={cand.firstname}
+                  className="w-50 h-50 object-cover"
+                />

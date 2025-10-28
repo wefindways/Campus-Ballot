@@ -1,0 +1,22 @@
+// How to use jQuery DataTables
+
+npm install datatables.net datatables.net-dt jquery
+
+// Insert this line of codes to the table component
+import $ from "jquery";
+import "datatables.net-dt/js/dataTables.dataTables";
+import "datatables.net-dt/css/dataTables.dataTables.css";
+
+useEffect(() => {
+  // Destroy existing table before reinitializing to avoid duplicate DataTables
+  if ($.fn.DataTable.isDataTable("#positionTable")) {
+    $("#positionTable").DataTable().destroy();
+  }
+
+  // Reinitialize DataTable
+  $("#positionTable").DataTable();
+}, [positions]); // Re-run when positions change
+
+
+// Run the code
+npm run dev
