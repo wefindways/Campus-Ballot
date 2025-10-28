@@ -1,0 +1,72 @@
+https://chatgpt.com/share/68bd289b-e014-800e-9767-28c94e32dfec
+
+// Admin dashboard UI sample
+https://www.graciousnaija.com/2021/05/e-voting-system-in-php-mysqli-source.html
+https://www.youtube.com/watch?v=aKKcXDi9DK8&t=1035s
+
+Include DataTables CSS & JS
+cd client
+npm install jquery datatables.net datatables.net-dt
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+
+
+import { useEffect } from "react";
+import $ from "jquery";
+import "datatables.net-dt/js/dataTables.dataTables";
+import "datatables.net-dt/css/dataTables.dataTables.css";
+
+import PositionsRow from "./PositionsRow";
+
+export default function PositionsTable({ positions, onEdit, onDelete }) {
+  useEffect(() => {
+    // Destroy old instance to avoid duplicates
+    if ($.fn.DataTable.isDataTable("#positionTable")) {
+      $("#positionTable").DataTable().destroy();
+    }
+    // Initialize new DataTable
+    $("#positionTable").DataTable();
+
+  }, [positions]); // re-run whenever rows change
+
+  return (
+    <table
+      id="datatable" 
+      className="table table-bordered min-w-full mt-4 border table-fixed"
+    >
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        {positions.length > 0 ? (
+          positions.map((pos) => (
+            <PositionsRow
+              key={pos.id}
+              position={pos}
+              onEdit={onEdit}
+              onDelete={onDelete}
+            />
+          ))
+        ) : (
+          <tr>
+            <td colSpan="3" className="text-center py-4 text-gray-500">
+              No data found
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  );
+}
